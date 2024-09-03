@@ -1,5 +1,6 @@
 import { createElement, forwardRef } from "react";
 import { getComponent } from "./registerComponents";
+import { Streamlit } from "streamlit-component-lib";
 
 interface ElementRendererProps {
     tree: IElementTree;
@@ -25,6 +26,16 @@ function dfsRender(tree: IElementTree | string) {
         return null;
     }
     if (typeof ele === "string") {
+        if (ele === 'input') {
+            return createElement('input', { ...tree.props, onChange: (e => {
+                console.log(e.target.value)
+                Streamlit.setComponentValue({
+                    value: e.target.value,
+                    event_id: 'x',
+
+                })
+            }) }, ...children);
+        }
         return createElement(ele, tree.props, ...children);
     }
     return createElement(ele as React.ComponentType<any>, tree.props, ...children);

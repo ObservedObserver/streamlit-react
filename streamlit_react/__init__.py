@@ -1,1 +1,1 @@
-from .base.element import element
+from .base.element import element, text
