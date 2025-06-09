@@ -1,50 +1,59 @@
-# React + TypeScript + Vite
+# Frontend - streamlit-react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Vite frontend for the streamlit-react component library.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This frontend renders React components from Python streamlit-react elements. It uses:
 
-## Expanding the ESLint configuration
+- **React 18** with TypeScript for type safety
+- **Vite** for fast development and building
+- **Tailwind CSS** for utility-first styling
+- **streamlit-component-lib** for Streamlit integration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Development
 
-- Configure the top-level `parserOptions` property like this:
+### Scripts
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+# Start development server
+yarn dev
+
+# Build for production
+yarn build
+
+# Lint code
+yarn lint
+
+# Preview production build
+yarn preview
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Project Structure
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+src/
+├── App.tsx              # Main app component
+├── element/             # Element rendering system
+│   ├── index.tsx        # Element renderer
+│   └── registerComponents.ts  # Component registration
+├── hooks/
+│   └── useAutoHeight.ts # Auto-height hook for Streamlit
+└── main.tsx            # App entry point
+```
+
+## Component Registration
+
+The `registerComponents.ts` file handles mapping element names to React components. Add new components here to extend the element system.
+
+## Styling
+
+Uses Tailwind CSS with custom configuration. Classes are applied directly from Python using the `className` prop.
+
+## Building
+
+The build process:
+1. TypeScript compilation
+2. Vite bundling
+3. Output to `dist/` directory
+4. Integration with Python package
